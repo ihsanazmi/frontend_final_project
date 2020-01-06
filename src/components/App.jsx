@@ -85,25 +85,21 @@ export class App extends Component {
             <div>
                 <BrowserRouter>
                     <div className="d-flex flex-column">
-                        <div className="fixed-top">
-                            <Header/>
-                        </div>
-                        <div style={{marginTop:100}}>
-                            <Switch>
-                                <Route path="/" exact component={Home}/>
-                                <Route path="/login" component={Login}/>
-                                <Route path="/register" component={Register}/>
-                                <Route path="/profile" component={Profile}/>
-                                <Route path="/pembelian" component={Pembelian}/>
-                                <Route path="/admin" component={Admin}/>
-                                <Route path="/cart" component={Cart}/>
-                                <Route path="/catalog" component={Catalog}/>
-                                <Route path="/detail/:id_product" component={DetailProduct}/>
-                                <Route path="/checkout" component={Checkout}/>
-                                <Route path="/verification" component={Verification}/>
-                                <Route path="*" component={NotFound}/>
-                            </Switch>
-                        </div>
+                        <Header/>
+                        <Switch>
+                            <Route path="/" exact component={Home}/>
+                            <Route path="/login" component={Login}/>
+                            <Route path="/register" component={Register}/>
+                            <Route path="/profile" component={Profile}/>
+                            <Route path="/pembelian" component={Pembelian}/>
+                            <Route path="/admin" component={Admin}/>
+                            <Route path="/cart" component={Cart}/>
+                            <Route path="/catalog" component={Catalog}/>
+                            <Route path="/detail/:id_product" component={DetailProduct}/>
+                            <Route path="/checkout" component={Checkout}/>
+                            <Route path="/verification" component={Verification}/>
+                            <Route path="*" component={NotFound}/>
+                        </Switch>
                     </div>
                 </BrowserRouter>
             </div>

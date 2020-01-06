@@ -28,9 +28,9 @@ export class Header extends Component {
     renderRole = ()=>{
         if(this.props.role === "1"){
             return(
-                <NavLink tag={Link} to ="/admin" >
+                <a className="text-decoration-none" href="/admin" >
                     <DropdownItem>Admin <i className="far fa-check-circle"/></DropdownItem>
-                </NavLink>
+                </a>
             )
         }
     }
@@ -78,6 +78,7 @@ export class Header extends Component {
                     <NavLink tag = {Link} to="/pembelian">
                         <DropdownItem>Pembelian</DropdownItem>
                     </NavLink>
+                    <DropdownItem divider />
                         {this.renderRole()}
                     <DropdownItem divider />
                     <Button className="dropdown-item" onClick={this.props.logOut}>Logout</Button>
@@ -88,6 +89,13 @@ export class Header extends Component {
     }
 
     render() {
+
+        let str = window.location.pathname
+        let res = str.split("/")
+        if(res.includes("admin")){
+            return null
+        }
+
         return (
             <div>
                 <Navbar  color="light" style={{height:'5vh'}} light expand = {true}>

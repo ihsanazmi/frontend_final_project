@@ -229,7 +229,7 @@ export class Home extends Component {
                         </div>
                     </div>
 
-                    <div className=" container mt-5 container rounded shadow" style={{display: this.state.bestSeller> 0 ? '' : 'none'}}>
+                    <div className=" container mt-5 container rounded shadow" style={{display: this.state.bestSeller[0] ? 'block' : 'none'}}>
                         <div className="pt-4 px-3">
                             <h4>Best Seller</h4>
                         </div>

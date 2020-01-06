@@ -33,7 +33,7 @@ class Pembelian extends Component {
             res.data.map((val)=>{
                 if(val.status === 'Delivered'){
                     let automatedFinished = new Date()
-                    automatedFinished.setSeconds(automatedFinished.getSeconds() - 10)
+                    automatedFinished.setDate(automatedFinished.getDate() - 2)
                     let delivered = new Date(val.delivered_at)
                     // console.log(automatedFinished > delivered)
                    

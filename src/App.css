@@ -3,3 +3,65 @@
 .welcomeFont h1{
   font-family: 'Share Tech', sans-serif;
 }
+
+.sidebar {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #00194C;
+  opacity: 0.9;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 0;
+}
+
+.sidebar-item {
+  padding: 8px 8px 8px 20px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar-item .tes{
+  display: none
+}
+
+
+@media (max-width: 767px) {  
+  .sidebar{
+    /* margin-left: 0; */
+    width: 100%;
+    height: auto;
+    position: relative;
+    transition: 0.5s;
+  }
+  .sidebar hr{
+    display: inline;
+  }
+  .sidebar-item {display: none;}
+  .sidebar-item .tes{
+    display: block;
+  }
+  
+}
+
+/* =================== CONTENT ADMIN =================== */
+.admin-content{
+  margin-left: 300px;
+}
+
+@media (max-width: 767px){
+  .admin-content{
+    margin-left: 0;
+  }
+}
+
+.table_img{
+  width: 64px;
+  height: 64px;
+}
