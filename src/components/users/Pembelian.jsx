@@ -30,29 +30,29 @@ class Pembelian extends Component {
 
         axios.get(`/transaction/${customer_id}`)
         .then(res=>{
-            res.data.map((val)=>{
-                if(val.status === 'Delivered'){
-                    let automatedFinished = new Date()
-                    automatedFinished.setDate(automatedFinished.getDate() - 2)
-                    let delivered = new Date(val.delivered_at)
-                    // console.log(automatedFinished > delivered)
+            // res.data.map((val)=>{
+            //     if(val.status === 'Delivered'){
+            //         let automatedFinished = new Date()
+            //         automatedFinished.setDate(automatedFinished.getDate() - 2)
+            //         let delivered = new Date(val.delivered_at)
+            //         // console.log(automatedFinished > delivered)
                    
-                    if(automatedFinished > delivered){
-                        console.log('update otomatis')
-                        axios.patch(`/transaction/completed/${val.transaction_id}`)
-                        .then(res=>{
-                            console.log(res.data)
-                        })
-                        .catch(err=>{
-                            console.log(err)
-                        })
-                    }
-                }
-                return res.data
-            })
+            //         if(automatedFinished > delivered){
+            //             console.log('update otomatis')
+            //             axios.patch(`/transaction/completed/${val.transaction_id}`)
+            //             .then(res=>{
+            //                 console.log(res.data)
+            //             })
+            //             .catch(err=>{
+            //                 console.log(err)
+            //             })
+            //         }
+            //     }
+            //     return res.data
+            // })
 
             this.setState({
-                transaction: res.data
+                transaction: res.data.reverse()
             })
         })
         .catch(err=>{

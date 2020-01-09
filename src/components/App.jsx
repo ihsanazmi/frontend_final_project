@@ -32,10 +32,45 @@ export class App extends Component {
             this.props.keepLogin(userData)
         }
         this.setState({loading:false})
+        this.autoCancel()
+        this.autoComplete()
+    }
 
+    autoComplete = ()=>{
         axios.get(`/getAllTransaction`)
         .then(res=>{
-            // console.log(res.data)
+            let filterTransaksi = res.data.filter(val=>{
+                return(
+                    val.status === 'Delivered'
+                )
+            })
+
+            let automatedComplete = new Date()
+            automatedComplete.setDate(automatedComplete.getDate() - 2)
+
+            filterTransaksi.map(val=>{
+                let delivered = new Date(val.delivered_at)
+                console.log(automatedComplete > delivered)
+                if(automatedComplete > delivered){
+                    axios.patch(`/transaction/completed/${val.transaction_id}`)
+                        .then(res=>{
+                            console.log(res.data)
+                        })
+                        .catch(err=>{
+                            console.log(err)
+                        })
+                }
+                return filterTransaksi
+            })
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    autoCancel=()=>{
+        axios.get(`/getAllTransaction`)
+        .then(res=>{
             let filterTransaksi = res.data.filter((val)=>{
                 return(
                     val.status === 'Pending' && val.img === null
@@ -107,4 +142,10 @@ export class App extends Component {
     }
 }
 
-export default connect(null, {keepLogin})(App)
+const mapStateToProps = (state)=>{
+    return{
+        id: state.auth.id
+    }
+}
+
+export default connect(mapStateToProps, {keepLogin})(App)
