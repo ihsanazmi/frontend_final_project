@@ -172,7 +172,7 @@ class DashboardAdmin extends Component {
         return (
             <div className="flex-column">
                     
-                <div className="admin-content">
+                <div className="admin-content mb-5">
                     <div className="container">
                         <div className="mb-4 mt-4">
                             <div className="card">

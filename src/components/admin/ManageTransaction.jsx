@@ -28,7 +28,7 @@ class ManageTransaction extends Component {
 
     componentDidMount(){
         const values = queryString.parse(this.props.location.search)
-        console.log(values.status)
+        // console.log(values.status)
         if(values.status){
             this.setState({filter: values.status})
         }

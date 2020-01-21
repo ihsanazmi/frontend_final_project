@@ -288,8 +288,6 @@ class TabManageCategory extends Component {
     }
 
     saveTipe = (id_tipe)=>{
-        // console.log(id_tipe)
-
         let formData = new FormData()
 
         let type = this.input_tipe.value
@@ -390,6 +388,7 @@ class TabManageCategory extends Component {
             }
         // Kondisi untuk save tipe
         }else{
+            console.log('s')
             formData.append("type", type)
             formData.append("created_at", created_at)
             formData.append("created_by", created_by)
@@ -397,7 +396,7 @@ class TabManageCategory extends Component {
             
             // KOndisi jika save tipe baru dengan image
             if(type_image !== undefined){
-                axios.patch(`/products/saveTipewithImg`, formData)
+                axios.post(`/products/saveTipewithImg`, formData)
                 .then(res=>{
                     if(res.data.error){
                         console.log(res.data)

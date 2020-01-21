@@ -47,18 +47,17 @@ class TabBiodata extends Component {
     onSaveBiodataClick = ()=>{
 
         let name = document.getElementById('nameInput').value
-        let username = document.getElementById('usernameInput').value
         let email = document.getElementById('emailInput').value
         let phone_number = document.getElementById('phoneInput').value
         let password = document.getElementById('passwordInput').value
         let updated_at = new Date()
         updated_at = moment(updated_at).format('YYYY-MM-DD HH-mm-ss')
 
-        const data = {name, username, email, phone_number, updated_at}
+        const data = {name, email, phone_number, updated_at}
 
         if(password) data.password = password
 
-        if(!name || !username || !email || !phone_number){
+        if(!name || !email || !phone_number){
             return(
                 Swal.fire({
                     position: 'center',

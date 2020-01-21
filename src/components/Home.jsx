@@ -181,7 +181,7 @@ export class Home extends Component {
                 <div className="card-body">
                     <p data-tip={products.product} className="font-weight-bold card-title text-truncate">{products.product}</p>
                     <p className="card-text font-weight-bold">Rp.{Intl.NumberFormat().format(products.price).replace(/,/g, '.')}</p>
-                    <Rating style={{color: "yellow"}} value={5} readonly={true} stars={5} cancel={false} />
+                    <Rating style={{color: "yellow"}} value={products.rating} readonly={true} stars={5} cancel={false} />
                     <button onClick={()=>{this.addToCart(products.product_id, products.price, products.stock)}} className="btn btn-block btn-outline-dark my-2">Add to Cart</button>
                 </div>
             </div>

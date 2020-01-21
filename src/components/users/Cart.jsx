@@ -16,7 +16,8 @@ class Cart extends Component {
         totalItem: '',
         grandTotal: '',
         modal_qty: false,
-        value_qty: ''
+        value_qty: '',
+        stock: 0
     }
 
     componentDidMount(){
@@ -34,7 +35,7 @@ class Cart extends Component {
                 totalItem = parseInt(totalItem) + val.qty
                 return res.data
             })
-            // console.log(grandTotal)
+            console.log(res.data)
             this.setState({
                 productCarts: res.data,
                 totalItem: totalItem,
@@ -72,6 +73,16 @@ class Cart extends Component {
 
     editQty = (id_cart)=>{
         let qty = this.edit_qty.value
+        if(!qty){
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Qty tidak boleh kosong',
+                showConfirmButton: false,
+                timer: 1000
+            })
+            return
+        }
         axios.patch(`/cart/update/${id_cart}`, {qty})
         .then(res=>{
             Swal.fire({
@@ -95,9 +106,11 @@ class Cart extends Component {
     toggle = (id)=>{
         axios.get(`/cart/getQty/${id}`)
         .then(res=>{
+            console.log(res.data)
             this.setState({
                 id_cart : id,
                 value_qty: res.data[0].qty,
+                stock:res.data[0].stock,
                 modal_qty: !this.state.modal_qty
             })
         })
@@ -108,6 +121,25 @@ class Cart extends Component {
             modal_qty: !this.state.modal_qty,
             value_qty: ''
         })
+    }
+
+    handleChange = ()=>{
+        let qty = parseInt(this.edit_qty.value)
+        console.log(this.state.stock)
+        if(qty >= this.state.stock){
+            return(
+                this.setState({value_qty: this.state.stock})
+            )
+        }
+        if(!qty){
+            this.setState({
+                value_qty: ''
+            })
+        }else{
+            this.setState({
+                value_qty: qty,
+            })
+        }
     }
 
     renderCart = ()=>{
@@ -173,7 +205,7 @@ class Cart extends Component {
                             <ModalHeader toggle={this.toggle_exit_edit}>Edit Quantity</ModalHeader>
                             <ModalBody>
                                 <label htmlFor="qty">Qty</label>
-                                <input className="form-control" id="qty" type="number" ref={(input)=>{this.edit_qty = input}} defaultValue = {this.state.value_qty}/>
+                                <input onChange={this.handleChange} className="form-control" id="qty" type="text" ref={(input)=>{this.edit_qty = input}} value={this.state.value_qty} />
                             </ModalBody>
                             <ModalFooter>
                             <Button color="primary" onClick={()=>{this.editQty(this.state.id_cart)}}>Save</Button>{' '}

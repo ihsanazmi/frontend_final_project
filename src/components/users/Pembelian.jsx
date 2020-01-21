@@ -230,11 +230,6 @@ class Pembelian extends Component {
 
     submitReview = (id, index)=>{
         // alert(product_id)
-        // console.log(product_id)
-        // console.log(index)
-        // let index = this.state.rating.findIndex(x=> x.name === i)
-        // console.log(index)
-        // console.log(this.state.rating[index].rate)
         let rating = this.state.rating[index].rate
         let comment = document.getElementById(`comment${index}`).value
         let product_id = id

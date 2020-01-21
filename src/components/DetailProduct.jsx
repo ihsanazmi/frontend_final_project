@@ -27,6 +27,7 @@ class DetailProduct extends Component {
         let id_product = this.props.match.params.id_product
         axios.get(`/products/review/${id_product}`)
         .then(res=>{
+            // console.log(res.data)
             this.setState({
                 totalReview: res.data.length,
                 review: res.data
@@ -170,9 +171,11 @@ class DetailProduct extends Component {
                 <tr key = {val.id}>
                     <td>
                         <div className="d-flex align-items-center">
-                            <img className="figure-img" src={val.avatar} alt=""/>
-                            <p className="ml-2">{val.name}</p>
-                            <p></p>
+                            <img className="rounded-circle" style={{height:32, width:32}} src={val.avatar} alt=""/>
+                            <div className="d-flex flex-column">
+                                <p className="ml-2 my-0">{val.name}</p>
+                                <p className="ml-2 my-0 text-muted" style={{fontSize:'10px'}}>{moment(val.created_at).startOf('day').fromNow()}</p>
+                            </div>
                         </div>
                         <div>
                             <Rating style={{color:'yellow'}} value={val.rating} readonly={true} stars={5} cancel={false} />
