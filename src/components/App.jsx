@@ -132,7 +132,7 @@ export class App extends Component {
                             <Route path="/catalog" component={Catalog}/>
                             <Route path="/detail/:id_product" component={DetailProduct}/>
                             <Route path="/checkout" component={Checkout}/>
-                            <Route path="/verification" component={Verification}/>
+                            <Route path="/verification/:username" component={Verification}/>
                             <Route path="*" component={NotFound}/>
                         </Switch>
                     </div>

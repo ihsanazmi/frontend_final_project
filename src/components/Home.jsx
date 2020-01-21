@@ -176,7 +176,7 @@ export class Home extends Component {
         return(
             <div className=" card m-3 p-3" style={{width:'14rem'}}>
                 <Link to={`/detail/${products.product_id}`}>
-                <img className="card-img-top align-self-center" src={products.image_product} alt="img" style={{cursor:'pointer'}}/>
+                <img className="card-img-top align-self-center p-3" src={products.image_product} alt="img" style={{cursor:'pointer', width:200, height:200}}/>
                 </Link>
                 <div className="card-body">
                     <p data-tip={products.product} className="font-weight-bold card-title text-truncate">{products.product}</p>

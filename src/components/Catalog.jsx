@@ -173,9 +173,10 @@ class Catalog extends Component {
         if(resultFilter.length !== 0){
             let catalog = resultFilter.map((val)=>{
                 return(
-                    <div key={val.id} className=" card mx-3 mb-3 px-3 pb-3 shadow-sm" style={{width: '14rem'}}>
+                    
+                    <div key={val.id} className=" card mx-3 mb-3 px-3 pb-3 shadow-sm product-item" style={{width: '14rem'}}>
                         <Link to={`/detail/${val.id}`}>
-                            <img className="card-img-top align-self-center" src={val.gambar} alt="img" style={{cursor:'pointer'}}/>
+                            <img className="card-img-top align-self-center p-3" src={val.gambar} alt="img" style={{cursor:'pointer', width:200, height:200}}/>
                         </Link>
                         <div className="card-body">
                             <p data-tip={val.nama_produk} className="font-weight-bold card-title text-truncate mb-0">{val.nama_produk}</p>

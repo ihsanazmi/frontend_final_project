@@ -7,6 +7,7 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Spinner } from 'rea
 import Swal from 'sweetalert2'
 import {Redirect, Link} from 'react-router-dom'
 import StarRatings from 'react-star-ratings'
+import {Rating} from 'primereact/rating';
 
 
 
@@ -18,7 +19,7 @@ class Pembelian extends Component {
         modal_finish: false,
         detail_product: null,
         transaction_id:'',
-        rating: 0,
+        rating: [],
     }
 
     componentDidMount(){
@@ -30,26 +31,6 @@ class Pembelian extends Component {
 
         axios.get(`/transaction/${customer_id}`)
         .then(res=>{
-            // res.data.map((val)=>{
-            //     if(val.status === 'Delivered'){
-            //         let automatedFinished = new Date()
-            //         automatedFinished.setDate(automatedFinished.getDate() - 2)
-            //         let delivered = new Date(val.delivered_at)
-            //         // console.log(automatedFinished > delivered)
-                   
-            //         if(automatedFinished > delivered){
-            //             console.log('update otomatis')
-            //             axios.patch(`/transaction/completed/${val.transaction_id}`)
-            //             .then(res=>{
-            //                 console.log(res.data)
-            //             })
-            //             .catch(err=>{
-            //                 console.log(err)
-            //             })
-            //         }
-            //     }
-            //     return res.data
-            // })
 
             this.setState({
                 transaction: res.data.reverse()
@@ -98,10 +79,11 @@ class Pembelian extends Component {
         this.setState({
             modal_detail: !this.state.modal_detail
         })
-        console.log(transaction_id)
+        // console.log(transaction_id)
         axios.get(`/transaction/getDetail/${transaction_id}`)
         .then(res=>{
             this.setState({detail_product : res.data})
+            console.log(res.data.length)
         })
         .catch(err=>{
             console.log(err)
@@ -139,27 +121,47 @@ class Pembelian extends Component {
         if(this.state.detail_product === null){
             return
         }
+        
         let i = 0
+        
         let render = this.state.detail_product.map((val)=>{
             i++
+
+        if(val.reviewed === '1'){
+           
             return(
-                <tr key={val.transaction_id}>
+                <tr key={i}>
+                <td>{i}</td>
+                <td><img src={val.image_product} style={{width:45, height:45}} alt="Gambar Produk"/></td>
+                <td className="w-25">{val.product}</td>
+                <td>
+                    <Rating style={{color: "yellow"}} value={val.rating} readonly={true} stars={5} cancel={false} />
+                </td>
+                <td><textarea disabled defaultValue={val.comment} className="form-control" id="" cols="40" rows="4"/></td>
+                <td><p className="bg-success">Already Review</p></td>
+            </tr>
+            )
+        }
+            let index = this.state.rating[i-1].index
+            return(
+                <tr key={i}>
                     <td>{i}</td>
                     <td><img src={val.image_product} style={{width:45, height:45}} alt="Gambar Produk"/></td>
                     <td className="w-25">{val.product}</td>
                     <td>
                     <StarRatings
-                        rating={this.state.rating}
+                        id={i}
+                        rating={this.state.rating[i-1].rate}
                         starRatedColor="yellow"
                         changeRating={this.changeRating}
                         starDimension='30px'
                         starSpacing = '2px'
                         numberOfStars={5}
-                        name='rating'
+                        name={`rating${i-1}`}
                     />
                     </td>
-                    <td><textarea ref={(input)=>{this.comment = input}} className="form-control" id="" cols="40" rows="4"></textarea></td>
-                    <td><button onClick={()=>{this.submitReview(val.product_id)}} className="btn btn-warning">Submit</button></td>
+                    <td><textarea ref={(input)=>{this.comment = input}} className="form-control" id={`comment${i-1}`} cols="40" rows="4"></textarea></td>
+                    <td><button onClick={()=>{this.submitReview(val.product_id, index )}} id={`button${i}`} className="btn btn-warning">Submit</button></td>
                 </tr>
             )
         })
@@ -167,8 +169,15 @@ class Pembelian extends Component {
     }
 
     changeRating = ( newRating, name )=> {
-        // console.log(name)
-        this.setState({rating: newRating})
+        let index = this.state.rating.findIndex(x=> x.name === name)
+        let data = {rate : newRating}
+        this.setState({
+            rating: [
+               ...this.state.rating.slice(0,index),
+               Object.assign({}, this.state.rating[index], data),
+               ...this.state.rating.slice(index+1)
+            ]
+          });
     }
 
     toggle_modal_finish = (transaction_id, status)=>{
@@ -203,7 +212,15 @@ class Pembelian extends Component {
             this.setState({modal_finish: !this.state.modal_finish, transaction_id:transaction_id})
             axios.get(`/transaction/getDetail/${transaction_id}`)
             .then(res=>{
-                this.setState({detail_product : res.data})
+                // console.log(res.data)
+                // console.log(res.data.length)
+                let data = []
+                for(let i = 0; i<res.data.length; i++){
+                    data.push({index: i, name: `rating${i}`, rate: 0})
+                }
+                // console.log(data)
+                this.setState({detail_product : res.data, rating: data})
+                
             })
             .catch(err=>{
                 console.log(err)
@@ -211,26 +228,41 @@ class Pembelian extends Component {
         }
     }
 
-    submitReview = (id)=>{
+    submitReview = (id, index)=>{
         // alert(product_id)
-        let rating = this.state.rating
-        let comment = this.comment.value
+        // console.log(product_id)
+        // console.log(index)
+        // let index = this.state.rating.findIndex(x=> x.name === i)
+        // console.log(index)
+        // console.log(this.state.rating[index].rate)
+        let rating = this.state.rating[index].rate
+        let comment = document.getElementById(`comment${index}`).value
         let product_id = id
         let customer_id = this.props.id
         let created_at = new Date()
+        let transaction_id = this.state.transaction_id
         created_at = moment(created_at).format('YYYY-MM-DD HH-mm-ss')
 
-        // console.log(comment)
-        axios.post(`/transaction/review/`, {rating, comment, product_id, customer_id, created_at})
+        // console.log({rating, comment, product_id, customer_id, created_at, transaction_id})
+        axios.post(`/transaction/review`, {rating, comment, product_id, customer_id, created_at, transaction_id})
         .then(res=>{
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: 'Ulasan berhasil di submit, terimakasih',
-                showConfirmButton: false,
-                timer: 1000
-            })
-            this.setState({rating: 0})
+                console.log(res.data)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ulasan berhasil di submit, terimakasih',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+                this.toggle_exit_finish()
+                // this.setState({rating: 0})
+           
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+        axios.patch(`/transaction/updateReview`, {transaction_id, product_id})
+        .then(res=>{
             console.log(res.data)
         })
         .catch(err=>{
@@ -239,7 +271,7 @@ class Pembelian extends Component {
     }
 
     toggle_exit_finish = ()=>{
-        this.setState({modal_finish: !this.state.modal_finish, rating:0})
+        this.setState({modal_finish: !this.state.modal_finish})
     }
 
     renderTransaction = ()=>{
@@ -292,7 +324,9 @@ class Pembelian extends Component {
                             <div className="d-flex flex-column justify-content-between">
                                 <p className="mb-0 font-weight-bold">Total Belanja</p>
                                 <p className="">Rp.{Intl.NumberFormat().format(val.grand_total).replace(/,/g, '.')}</p>
+
                                 {val.status !== 'Pending' && val.status !== 'Rejected' && val.status !== 'Sending' ? <button onClick={()=>{this.toggle_modal_finish(val.transaction_id, val.status)}} className="btn btn-success">{val.status === 'Delivered' ? 'Produk Diterima': 'Review Produk'}</button> : ''}
+
                                 <button onClick={()=>{this.seeDetail(val.transaction_id)}} className="btn btn-outline-warning">See Detail</button>
                             </div>
                         </div>
