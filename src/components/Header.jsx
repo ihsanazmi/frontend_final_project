@@ -28,7 +28,7 @@ export class Header extends Component {
     renderRole = ()=>{
         if(this.props.role === "1"){
             return(
-                <a className="text-decoration-none" href="/admin" >
+                <a className="text-decoration-none" href="/admin/dashboard" >
                     <DropdownItem>Admin <i className="far fa-check-circle"/></DropdownItem>
                 </a>
             )

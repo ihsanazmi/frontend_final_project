@@ -47,7 +47,7 @@ class Admin extends Component {
                         <Route path = {this.props.match.path + '/manageTransaction'} component = {ManageTransaction}/>
                         <Route path = {this.props.match.path +'/manageUser'} component = {ManageUser}/>
                     </div>
-                    <Redirect to="/admin/dashboard"></Redirect>
+                    {/* <Redirect to="/admin/dashboard"></Redirect> */}
                 </div>
             )
         }else{
