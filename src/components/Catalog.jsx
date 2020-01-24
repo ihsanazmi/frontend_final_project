@@ -326,7 +326,7 @@ class Catalog extends Component {
     }
 
     render() {
-        if(this.state.allType === null || this.state.allCategory === null){
+        if(this.state.allType === null || this.state.allCategory === null || this.state.allProduct === null){
             return <Spinner size="lg" animation="border" className="d-flex justify-content-center mx-auto d-block" style={{marginTop : '50vh'}} />
         }
         // console.log(this.state.mulaiDari)
