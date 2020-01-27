@@ -58,7 +58,7 @@ class DashboardAdmin extends Component {
         axios.get(`/totalTransaction`)
         .then(res=>{
             this.setState({transaction: res.data})
-            console.log(res.data)
+            // console.log(res.data)
         })
         .catch(err=>{
             console.log(err)

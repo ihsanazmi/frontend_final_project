@@ -35,7 +35,7 @@ class Cart extends Component {
                 totalItem = parseInt(totalItem) + val.qty
                 return res.data
             })
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({
                 productCarts: res.data,
                 totalItem: totalItem,
@@ -106,7 +106,7 @@ class Cart extends Component {
     toggle = (id)=>{
         axios.get(`/cart/getQty/${id}`)
         .then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({
                 id_cart : id,
                 value_qty: res.data[0].qty,
@@ -125,7 +125,7 @@ class Cart extends Component {
 
     handleChange = ()=>{
         let qty = parseInt(this.edit_qty.value)
-        console.log(this.state.stock)
+        // console.log(this.state.stock)
         if(qty >= this.state.stock){
             return(
                 this.setState({value_qty: this.state.stock})
@@ -148,9 +148,9 @@ class Cart extends Component {
                 <tr key={val.id}>
                     <td>
                         <div className="d-flex flex-row justify-content-between">
-                            <img className="rounded border w-25" src={val.image_product} alt="img"/>
+                            <img className="rounded border mx-auto my-auto" style={{height:120, width:120}} src={val.image_product} alt="img"/>
 
-                            <div className="flex-column">
+                            <div className="flex-column w-75">
                                 <p className="pl-3">{val.product}</p>
                                 <p className="pl-3 mb-0" style={{color: 'red'}}> Rp.{Intl.NumberFormat().format(val.price).replace(/,/g, '.')}</p>
 
@@ -176,17 +176,17 @@ class Cart extends Component {
             }
             if(this.state.productCarts.length !== 0){
                 return (
-                    <div className="pt-5">
-                        <div className="container">
-                            <div className=" row">
-                                <div className="col-8">
+                    <div className="main-content">
+                        <div className="container pt-5">
+                            <div className=" row pb-5">
+                                <div className="col-md-8 col-12">
                                     <table className="table table-bordered shadow">
                                         <tbody>
                                             {this.renderCart()}
                                         </tbody>
                                     </table>
                                 </div>
-                                <div className="col-4" >
+                                <div className="col-md-4 col-12" >
                                     <div className="d-flex flex-column shadow rounded p-3">
                                         <h5 className="mb-3">Ringkasan Belanja</h5>
                                         
@@ -220,8 +220,8 @@ class Cart extends Component {
                 )
             }else{
                 return(
-                    <div className="pt-5">
-                        <div className="mt-5">
+                    <div className="main-content">
+                        <div className="pt-5">
                         <center>
                             <h1 className="display-4">Oops!</h1>
                             <h3>Keranjang anda masih kosong</h3>

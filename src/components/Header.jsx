@@ -112,7 +112,7 @@ export class Header extends Component {
                         </NavItem>
                     </Nav>
                 </Navbar>
-                <Navbar style={{boxShadow:"0 4px 6px -1px rgba(116,222,128,0.55)"}} color="white" className="" light expand= "md">
+                <Navbar style={{boxShadow:"0 4px 6px -1px rgba(116,222,128,0.55)", backgroundColor:'white'}} color="white" className="" light expand= "md">
                     <Link to="/" className="navbar-brand">Komputer Shop</Link>
                     <NavbarToggler className="mb-2" onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>

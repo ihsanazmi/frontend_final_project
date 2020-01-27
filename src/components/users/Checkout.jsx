@@ -209,7 +209,7 @@ class Checkout extends Component {
                     <div className="p-4">
                         <div className="d-flex flex-row">
                             <p className="font-weight-bold mb-0">{val.penerima}</p> 
-                            <p className=" ml-3 mb-0 px-3 border rounded-pill" style={{backgroundColor:color}}>{status}</p>
+                            <p className=" ml-3 mb-0 px-3 my-auto rounded-pill" style={{backgroundColor:color}}>{status}</p>
                         </div>
                         <p>{val.phone_number}</p>
                         <p className="mb-0">{val.alamat_pengiriman}</p>
@@ -255,7 +255,7 @@ class Checkout extends Component {
 
         axios.patch(`/product/updateStock`, {customer_id})
         .then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
         })
         .catch(err=>{
             console.log(err)
@@ -305,8 +305,8 @@ class Checkout extends Component {
         let product = this.state.productCart.map((val)=>{
             return (
                 <div key ={val.id} className="d-flex flex-row justify-content-center my-4 pb-3 border-top border-bottom">
-                    <img className="rounded border w-25 mt-2" src={val.image_product} alt="img"/>
-                    <div className="flex-column">
+                    <img className="rounded border my-auto" style={{height:120 ,width:120}} src={val.image_product} alt="img"/>
+                    <div className="flex-column w-75">
                         <p className="pl-3">{val.product}</p>
                         {val.stock === 0 ? <p className="pl-3 text-danger font-weight-bold">Out of Stock</p> : ''}
                         <p className="pl-3 mb-0" style={{color: 'red'}}> Rp.{Intl.NumberFormat().format(val.price).replace(/,/g, '.')}</p>
@@ -335,10 +335,10 @@ class Checkout extends Component {
 
             if(!this.state.redirect){
                     return (
-                        <div className="pt-5">
-                            <div className="container">
-                                <div className="row">
-                                    <div className="col-8">
+                        <div className="main-content">
+                            <div className="container pt-5">
+                                <div className="row pb-5">
+                                    <div className="col-md-8 col-12">
                                         <p>Checkout</p>
                                         <p>Alamat Pengiriman</p>
                                         <div className="border-top border-bottom">
@@ -351,7 +351,7 @@ class Checkout extends Component {
                                         {this.renderProduct()}
                                         
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-md-4 col-12">
                                         <div className="d-flex flex-column shadow rounded p-3">
                                             <h5 className="mb-3">Ringkasan Belanja</h5>
                                             

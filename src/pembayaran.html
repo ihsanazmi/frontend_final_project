@@ -1,0 +1,102 @@
+<style>
+    .body_email{
+        width: 50%
+    }
+    @media (max-width: 767px){
+        .body_email{
+            width: 100%
+        }
+    }
+</style>
+<div class="body_email" style=" border: 1px solid #eaeaea; border-radius: 10px; padding: 1rem; margin: 0 auto; ">
+    <h1>Toko Online Komputer</h1>
+    <h2 style="color: #666">Mohon segera selesaikan pembayaran Anda</h2>
+    <p style="color:#999">Checkout berhasil pada tanggal ${data.created_at}</p>
+    
+    <table style="width:100%">
+        <thead>
+            <tr>
+                <td style="width:50%; font-weight: 600">Total Pembayaran</td>
+                <td style="width:50%; font-weight: 600">Batas Waktu Pembayaran</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="color: #999">Rp. 2.100.000</td>
+                <td style="color: #999">Sabtu, 20 Januari 2020</td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="width:100%; padding-top: 20px">
+        <thead>
+            <tr>
+                <td style="width:50%; font-weight: 600">Metode Pembayaran</td>
+                <td style="width:50%; font-weight: 600">Transfer Bank</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="color: #999">No. Invoice</td>
+                <td style="color: #999">INV/2012/djsal</td>
+            </tr>
+        </tbody>
+    </table>
+    <table style="width:100%; padding-top: 20px">
+        <thead>
+            <tr>
+                <td style="width:50%; font-weight: 600">Status Pembayaran</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="color: #999">Menunggu Pembayaran</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <div style="padding-top: 40px; ">
+        <p style="font-weight: 600; ">Detail Pesanan</p>
+    </div>
+    <table style="width:100%;">
+        <thead>
+            <th >
+                <td style="width: 60%; "></td>
+                <td ></td>
+                <td ></td>
+            </th>
+        </thead>
+        <tbody >
+            <tr >
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">Prosesor</td>
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">2X</td>
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">Rp. 2.000.000</td>
+            </tr>
+            <tr>
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">Prosesor</td>
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">2X</td>
+                <td style="border-bottom: 1px solid #eaeaea; padding-top: 10px ">Rp. 2.000.000</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2" style="font-weight: 600; padding-top: 40px">Total Pembayaran</td>
+                <td style="font-weight: 600; padding-top: 40px">Rp. 2.000.000</td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div style="margin-top: 40px">
+        <p style="font-size: 18px; color:#999">Pantau status pembayaran anda pada halaman Pembelian.</p>
+        <a href="http://localhost:3000/pembelian">
+            <button style=" 
+        background-color: #a0dfa4;
+        border: none;
+        color: #1C2A48;
+        padding: 15px 32px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        ">Cek Status Pembayaran</button></a>
+    </div>
+
+</div>

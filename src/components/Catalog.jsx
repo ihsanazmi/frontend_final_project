@@ -174,7 +174,7 @@ class Catalog extends Component {
             let catalog = resultFilter.map((val)=>{
                 return(
                     
-                    <div key={val.id} className=" card mx-3 mb-3 px-3 pb-3 shadow-sm product-item" style={{width: '14rem'}}>
+                    <div key={val.id} className=" card mx-auto mb-3 px-3 pb-3 shadow-sm product-item" style={{width: '14rem'}}>
                         <Link to={`/detail/${val.id}`}>
                             <img className="card-img-top align-self-center p-3" src={val.gambar} alt="img" style={{cursor:'pointer', width:200, height:200}}/>
                         </Link>
@@ -331,10 +331,10 @@ class Catalog extends Component {
         }
         // console.log(this.state.mulaiDari)
         return (
-            <div className="pt-5">
-                <div className="container-fluid">
+            <div className="main-content">
+                <div className="container-fluid pt-5">
                     <div className="row">
-                        <div className="mx-5 mb-5 shadow-sm col-10 col-md-2 border rounded-lg overflow-auto" style={{height:'115vh'}}>
+                        <div className="mx-auto mb-5 shadow-sm col-10 col-md-2 border rounded-lg overflow-auto" style={{height:'115vh'}}>
                             <h4 className="pt-4">Filter</h4>
                             <hr/>
                             <div>
@@ -371,7 +371,7 @@ class Catalog extends Component {
                             </div>
                         </div>
                         
-                        <div className="col-12 ml-auto col-md-9">
+                        <div className="col-12 ml-auto col-md-10">
                             <div className="row">
                             <ReactTooltip place="top" type="dark" effect="solid"/>
                                 {this.dataCatalog()}

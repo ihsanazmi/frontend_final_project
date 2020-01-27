@@ -11,7 +11,7 @@ class Footer extends Component {
         return (
             <div className="shadow-lg w-100" style={{}}>
                 <div className="container">
-                    <div className="py-5 d-flex flex-row justify-content-around align-items-center">
+                    <div className="py-5 d-flex flex-row flex-wrap justify-content-around align-items-center">
                         <div className="d-flex flex-column align-items-center">
                             <img src={Lowprice} alt="low"/>
                             <p>Harga Termurah</p>
@@ -32,7 +32,7 @@ class Footer extends Component {
 
                     <hr/>
 
-                    <div className="py-5 d-flex flex-row justify-content-around">
+                    <div className="py-5 d-flex flex-wrap flex-row justify-content-around">
                         <div>
                             <p className="font-weight-bold">Bantuan</p>
                             <ul className="list-unstyled">
@@ -66,9 +66,9 @@ class Footer extends Component {
                         <div>
                             <p className="font-weight-bold">Toko Kami</p>
                             <ul className="list-unstyled">
-                                <li className="pb-2"><p className="text-muted">Istana BEC Bandung, Lt.3 No. 31-32, 40599</p></li>
+                                <li className="pb-2"><p className="text-muted">Bandung, 40599</p></li>
                                 <li className="pb-2"><p className="text-muted">Buka Senin-Sabtu, 10:00-19:00 WIB</p></li>
-                                <li className="pb-2"><p className="text-muted"><i className="fas fa-phone"></i> 022-4205100</p></li>
+                                <li className="pb-2"><p className="text-muted"><i className="fas fa-phone"></i> 081931474569</p></li>
                                 <li className="pb-2"><p className="text-muted"><i className="fas fa-envelope"></i> project.computer.shop@gmail.com</p></li>
                             </ul>
                         </div>
@@ -86,7 +86,7 @@ class Footer extends Component {
                     <hr/>
 
                     <div className="pb-2">
-                        <p>Copyright 2019 <b>ComputerShop</b>. All Rights Reserved</p>
+                        <p>Copyright 2019 <b><a className="text-decoration-none text-black-50" target="_blank" href="/">ComputerShop Developer</a></b>. All Rights Reserved</p>
                     </div>
 
                 </div>

@@ -242,8 +242,8 @@ class Register extends Component {
                 return <Redirect to="/login"/>
             }
             return (
-                <div className="">
-                    <div className="col-6 mx-auto mt-3 card">
+                <div className="main-content">
+                    <div className="col-6 mx-auto mt-5 card">
                         <div className="card-body">
                             <div className="border-bottom border-secondary card-title">
                                 <h1>REGISTER</h1>

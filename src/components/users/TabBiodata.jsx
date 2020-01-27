@@ -94,9 +94,22 @@ class TabBiodata extends Component {
         let formData = new FormData()
         let avatar = this.avatar.files[0]
         formData.append("avatar", avatar)
-        console.log(avatar)
+        // console.log(avatar.type)
+        if(avatar.type !== 'image/jpeg'){
+            return(
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Format foto harus JPG',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+            )
+        }
+
         axios.post(`/avatar/${this.props.username}`, formData)
             .then((res)=>{
+                // console.log(res.data)
                 Swal.fire({
                     position: 'center',
                     icon: 'success',

@@ -46,6 +46,7 @@ export class Home extends Component {
     getBestSeller = ()=>{
         axios.get(`/infoTotalTerjual`)
         .then(res=>{
+            // console.log(res.data)
             this.setState({bestSeller: res.data})
         })
         .catch(err=>{
@@ -148,9 +149,11 @@ export class Home extends Component {
         let hasil = this.state.type.map((val)=>{
             return (
                 <Link key={val.id} to={`/catalog?id_type=${val.id}`}>
-                    <div  className="d-flex flex-column align-items-center" style={{cursor:'pointer'}}>
-                        <img style={{width:64}} src={val.type_image} alt="png"/>
-                        <p className="mt-2 px-3 ph-2 rounded-pill border">{val.type}</p>
+                    <div className="px-3 mx-1 mb-3 d-inline-block">
+                        <div  className="d-flex flex-column align-items-center" style={{cursor:'pointer'}}>
+                            <img style={{width:64}} src={val.type_image} alt="png"/>
+                            <p className="mt-2 px-3 ph-2 rounded-pill border">{val.type}</p>
+                        </div>
                     </div>
                 </Link>
             )
@@ -174,7 +177,7 @@ export class Home extends Component {
     productTemplate = (products)=>{
         
         return(
-            <div className=" card m-3 p-3" style={{width:'14rem'}}>
+            <div className=" card m-3 p-3" style={{width:'13rem'}}>
                 <Link to={`/detail/${products.product_id}`}>
                 <img className="card-img-top align-self-center p-3" src={products.image_product} alt="img" style={{cursor:'pointer', width:200, height:200}}/>
                 </Link>
@@ -194,15 +197,15 @@ export class Home extends Component {
         }
 
         return (
-            <div>
+            <div className="main-content">
                 <div className="pt-3">
                     <div className="welcomeFont m-3 mx-auto container rounded shadow" >
                         <div className="p-1 text-center">
-                            <h1 className="display-2 mt-4">
+                            <h1 className="mt-4">
                                 <Typewriter
                                     onInit={(typewriter) => {
                                         typewriter.typeString('Welcome to Our Online Store')
-                                        typewriter.typeString('<h1 class="display-3 d-inline-block">Please enjoy your shopping!</h1>')
+                                        typewriter.typeString('<h1 class=" d-inline-block">Please enjoy your shopping!</h1>')
                                         .start()
                                     }}
                                     options={{
@@ -214,10 +217,13 @@ export class Home extends Component {
                     </div>
 
                     <div className="mt-5 container rounded shadow" >
-                        <div className="pt-4 px-3">
+                        <div className="pt-4 px-3 d-flex flex-row justify-content-between title-product">
                             <h4>Pilihan Produk Kami</h4>
+                            <Link to="/catalog" className="" style={{color:"black"}}>
+                                <p className="text-center">See All Product ></p>                    
+                            </Link>
                         </div>
-                        <div className="mt-3 d-flex flex-row overflow-auto justify-content-around" >
+                        <div className="overflow-auto mt-3 px-3" style={{whiteSpace:'nowrap'}} >
                             {this.renderType()}
                         </div>
                         <hr/>

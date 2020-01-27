@@ -56,8 +56,8 @@ class Verification extends Component {
             return <Redirect to="/login"/>
         }
         return (
-            <div className="pt-5">
-                <div className="mt-2 container">
+            <div className="main-content">
+                <div className="mt-2 container pt-5">
                     <center>
                         <p>Selamat Datang {this.state.name}</p>
                         <p>Untuk dapat berbelanja di toko ini, harap registrasi email terlebih dahulu.</p>

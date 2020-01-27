@@ -1,0 +1,22 @@
+<div style="width: 50%; background-color: #a0dfa4; color: black; text-align: center; margin: 0 auto; font-family: monospace;">
+    <h1 style="padding: 10px">Hello, ${data.name}</h1>
+    <div
+        style="background-color: #eaeaea; color: #1C2A48; text-align: center; margin: 0 auto; height: 100%; padding: 20px;">
+        <h1 style="font-size: 70px">Account Verification !</h1>
+        <p>Dear ${data.name}</p>
+        <p>This is verification email to your account because your email has registered in our website.</p>
+        <p>Click the button below to verifiy your account !</p>
+        <a href="http://localhost:3000/verification/${data.username}">
+            <button style=" 
+        background-color: #a0dfa4;
+        border: none;
+        color: #1C2A48;
+        padding: 15px 32px;
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        ">Verify Now !</button></a>
+        <p>Thanks for register to our website!</p>
+        <p>Please enjoy the shoping!</p>
+    </div>
+</div>

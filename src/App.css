@@ -4,6 +4,10 @@
   font-family: 'Share Tech', sans-serif;
 }
 
+.main-content{
+  margin-top: 100px
+}
+
 .sidebar {
   height: 100%;
   width: 300px;
@@ -31,6 +35,15 @@
   display: none
 }
 
+.title-product p{
+  font-size: 1rem;
+}
+
+.title-product p:hover{
+  color: green;
+  cursor: pointer;
+  transition: 0.5s;
+}
 
 @media (max-width: 767px) {  
   .sidebar{
@@ -47,7 +60,10 @@
   .sidebar-item .tes{
     display: block;
   }
-  
+  .title-product p{
+    font-size: 12px;
+  }
+
 }
 
 /* =================== CONTENT ADMIN =================== */

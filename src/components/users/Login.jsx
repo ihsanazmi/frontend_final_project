@@ -39,8 +39,8 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
     render() {
         if(!this.props.username){
             return (
-                <div>
-                    <div className="col-6 mx-auto mt-3 card" style={{minWidth:300}}>
+                <div className="main-content">
+                    <div className="col-6 mx-auto mt-5 card" style={{minWidth:300}}>
                         <div className="card-body">
                             <div className="border-bottom border-secondary card-title">
                                 <h1>LOGIN</h1>

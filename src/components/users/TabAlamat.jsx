@@ -284,9 +284,9 @@ class TabAlamat extends Component {
                     <td>{item.penerima}</td>
                     <td>{item.phone_number}</td>
                     <td>{item.alamat_pengiriman}, {item.daerah_pengiriman}</td>
-                    <td>
+                    <td className="">
                         <button onClick={()=>{this.toggle_edit_address(item.kodepos_id, item.penerima, item.phone_number, item.alamat_pengiriman, item.id)}} className="btn btn-light "><i className="far fa-edit"></i> Edit</button>
-                        <button onClick={()=>{this.deleteAddress(item.id)}} className="btn btn-light ml-2"><i className="fas fa-trash"></i> Hapus</button>
+                        <button onClick={()=>{this.deleteAddress(item.id)}} className="btn btn-light ml-2 mt-2"><i className="fas fa-trash"></i> Hapus</button>
                     </td>
                 </tr>
             )

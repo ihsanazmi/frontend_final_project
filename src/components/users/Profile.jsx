@@ -14,8 +14,8 @@ class Profile extends Component {
     render() {
         if(this.props.username){
             return (
-                <div>
-                    <div className="container">
+                <div className="main-content">
+                    <div className="container pb-5">
                         <Tabs className="mt-5 pt-2  ">
                             <TabList>
                                 <Tab>Biodata Diri</Tab>

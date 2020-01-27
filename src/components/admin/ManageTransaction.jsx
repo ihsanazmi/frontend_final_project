@@ -291,7 +291,7 @@ class ManageTransaction extends Component {
 
                     <div className="admin-content">
                         <div className="container">
-                            <div className="d-flex flex-row mb-3">
+                            <div className="d-flex overflow-auto flex-row mb-3">
                                 <p className="font-weight-bold mb-0 pt-1 mr-2">Filter Status: </p>
                                 <button onClick={()=>{this.filterTransaction('all')}} className="btn btn-outline-dark shadow">All <span className="rounded p-1 font-weight-bold">{this.state.total_transaction}</span></button>
                                 <button onClick={()=>{this.filterTransaction('pending')}} className="btn btn-outline-dark ml-3 shadow">Pending <span className="rounded p-1 font-weight-bold">{this.state.pending}</span></button>
@@ -300,7 +300,6 @@ class ManageTransaction extends Component {
                                 <button onClick={()=>{this.filterTransaction('cancel')}} className="btn btn-outline-dark ml-3 shadow">Cancel <span className="rounded p-1 font-weight-bold">{this.state.cancel}</span></button>
                                 <button onClick={()=>{this.filterTransaction('delivered')}} className="btn btn-outline-dark ml-3 shadow">Delivered <span className="rounded p-1 font-weight-bold">{this.state.delivered}</span></button>
                                 <button onClick={()=>{this.filterTransaction('completed')}} className="btn btn-outline-dark ml-3 shadow">Completed <span className="rounded p-1 font-weight-bold">{this.state.completed}</span></button>
-                                <input ref={(input)=>{this.search = input}} className="form-control ml-auto col-2" onChange={this.searchInvoice} placeholder="Search Invoice" type="text"/>
                             </div>
 
                             <div className="d-flex flex-row">
@@ -313,7 +312,9 @@ class ManageTransaction extends Component {
                             <div className="card shadow mt-3">
                                 <p className="card-header">Manage Transaction User</p>
                                 <div className="card-body">
-                                    <table className="table table-responsive">
+                            <input ref={(input)=>{this.search = input}} className="form-control" onChange={this.searchInvoice} placeholder="Search Invoice" type="text"/>
+
+                                    <table className="table table-responsive overflow-auto">
                                         <thead>
                                             <tr>
                                                 <th>Tanggal</th>

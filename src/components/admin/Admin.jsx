@@ -19,7 +19,7 @@ class Admin extends Component {
     render() {
         if(this.props.username){
             return (
-                <div>
+                <div style={{marginTop:'0px'}}>
                     <div id="sidebar" className="sidebar shadow">
                         <a className="d-flex flex-row justify-content-center align-items-center text-decoration-none mt-3 sidebar-logo" href="/">
                             <h3 className="ml-3 mb-0 text-white">Komputer Shop</h3>

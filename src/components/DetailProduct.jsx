@@ -172,9 +172,9 @@ class DetailProduct extends Component {
                     <td>
                         <div className="d-flex align-items-center">
                             <img className="rounded-circle" style={{height:32, width:32}} src={val.avatar} alt=""/>
-                            <div className="d-flex flex-column">
-                                <p className="ml-2 my-0">{val.name}</p>
-                                <p className="ml-2 my-0 text-muted" style={{fontSize:'10px'}}>{moment(val.created_at).startOf('day').fromNow()}</p>
+                            <div className="d-flex flex-column ">
+                                <p className="ml-2" >{val.name}</p>
+                                <p className="ml-2 text-muted" style={{fontSize:'10px'}}>{moment(val.created_at).startOf('day').fromNow()}</p>
                             </div>
                         </div>
                         <div>
@@ -193,8 +193,8 @@ class DetailProduct extends Component {
             return <Spinner size="lg" animation="border" className="d-flex justify-content-center mx-auto d-block" style={{marginTop : '50vh'}} />
         }
         return (
-            <div className="pt-5 ">
-                <div className="container">
+            <div className="main-content ">
+                <div className="container pt-5">
                     <div className="row">
                         {/* Gambar produk */}
                         <div className="col-12 col-md-5">
@@ -228,7 +228,7 @@ class DetailProduct extends Component {
                                 </TabList>
                                 
                                 <TabPanel>
-                                    <textarea className="form-control" style={{backgroundColor: 'white', border:'none'}} readOnly cols="30" rows="5" defaultValue={this.state.product[0].description}></textarea>
+                                    <textarea className="form-control" style={{backgroundColor: 'white', border:'none'}} readOnly cols="30" rows="30" defaultValue={this.state.product[0].description}></textarea>
                                 </TabPanel>
                                 <TabPanel>
                                     <table className="table table-bordered table-hover mb-5 pb-5">
@@ -246,13 +246,13 @@ class DetailProduct extends Component {
                     <div className="d-flex justify-content-end align-items-center container">
                         <div>
                             <p className="mt-0 mb-0 text-muted">Total</p>
-                            <p className="mt-0 mb-0" style={{fontSize:24}}>Rp.{Intl.NumberFormat().format(this.state.product[0].price * this.state.count).replace(/,/g, '.')}</p>
+                            <p className="mt-0 mb-0" style={{fontSize:18}}>Rp.{Intl.NumberFormat().format(this.state.product[0].price * this.state.count).replace(/,/g, '.')}</p>
                         </div>
-                        <div className="border rounded ml-3">
+                        {/* <div className="border rounded ml-3">
                             <i className="far fa-heart p-3"></i>
-                        </div>
+                        </div> */}
                         {/* <button onClick={this.onBeliClick} className="btn btn-lg btn-outline-warning align ml-3">Beli</button> */}
-                        <button onClick={this.addToCart} className="btn btn-lg btn-warning ml-3" disabled={this.state.product[0].stock === 0 ? true : false}>Tambah ke Keranjang</button>
+                        <button onClick={this.addToCart} style={{fontSize:12}} className="btn btn-lg btn-warning ml-3" disabled={this.state.product[0].stock === 0 ? true : false}>Tambah ke Keranjang</button>
                     </div>
                 </div>
             </div>

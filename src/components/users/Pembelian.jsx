@@ -123,6 +123,8 @@ class Pembelian extends Component {
         }
         
         let i = 0
+
+        console.log(this.state.detail_product)
         
         let render = this.state.detail_product.map((val)=>{
             i++
@@ -282,7 +284,7 @@ class Pembelian extends Component {
                 color = 'green'
             }
             return(
-                <div key={val.transaction_id} className="border rounded shadow-sm m-3">
+                <div key={val.transaction_id} className="border rounded shadow-sm m-3 overflow-auto">
                     <div className="p-4">
                         <div className="d-flex flex-row justify-content-between">
                             <div className="d-flex flex-column">
@@ -296,7 +298,7 @@ class Pembelian extends Component {
                             </div>
                         </div>
                         <hr/>
-                        <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-row flex-wrap justify-content-between">
                             <div className="d-flex flex-column align-items-center" style={{flex:1}}>
                                 <img src={val.payment_proof} className="img-thumbnail" style={{width:'20%', minWidth:100}} alt="Upload Bukti Pembayaran"/>
                                 {val.status !== 'Pending' && val.status !== 'Rejected' ? '' : <button onClick={()=>{this.uploadPaymentProof(val.transaction_id)}} className="btn btn-outline-info mt-3">Upload</button> }
@@ -322,7 +324,7 @@ class Pembelian extends Component {
 
                                 {val.status !== 'Pending' && val.status !== 'Rejected' && val.status !== 'Sending' ? <button onClick={()=>{this.toggle_modal_finish(val.transaction_id, val.status)}} className="btn btn-success">{val.status === 'Delivered' ? 'Produk Diterima': 'Review Produk'}</button> : ''}
 
-                                <button onClick={()=>{this.seeDetail(val.transaction_id)}} className="btn btn-outline-warning">See Detail</button>
+                                <button onClick={()=>{this.seeDetail(val.transaction_id)}} className="btn btn-outline-warning ">See Detail</button>
                             </div>
                         </div>
                         <hr/>
@@ -344,79 +346,83 @@ class Pembelian extends Component {
 
             if(this.state.transaction.length === 0){
                 return(
-                    <div className="pt-5">
-                        <div className="mt-5">
-                        <center>
-                            <h1 className="display-4">Oops!</h1>
-                            <h3>Belum pernah melakukan transaksi</h3>
-                            <h3>Mulai belanja disini</h3>
-                            <Link to="/">
-                                <button className="btn btn-info">Belanja</button>
-                            </Link>
-                        </center>
+                    <div className="main-content">
+                        <div className="pt-5">
+                            <div className="mt-5">
+                            <center>
+                                <h1 className="display-4">Oops!</h1>
+                                <h3>Belum pernah melakukan transaksi</h3>
+                                <h3>Mulai belanja disini</h3>
+                                <Link to="/">
+                                    <button className="btn btn-info">Belanja</button>
+                                </Link>
+                            </center>
+                            </div>
                         </div>
                     </div>
                 )
             }
     
             return (
-                <div className="pt-5">
-                    <div className="container border rounded mb-5" style={{backgroundColor:'white'}}>
-                        {this.renderTransaction()}
-                    </div>
-                    <div>
-                    <Modal size={'lg'} isOpen={this.state.modal_detail} toggle={this.toggle_exit_detail}>
-                        <ModalHeader toggle={this.toggle_exit_detail}>Detail Transaksi</ModalHeader>
-                        <ModalBody>
-                            <table className="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <td>No</td>
-                                        <td>Gambar</td>
-                                        <td>Product</td>
-                                        <td>Qty</td>
-                                        <td>Harga</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {this.renderDetail()}
-                                </tbody>
-                            </table>
-                        </ModalBody>
-                        <ModalFooter>
-                        <Button color="secondary" onClick={this.toggle_exit_detail}>Cancel</Button>
-                        </ModalFooter>
-                    </Modal>
-                    <Modal size={'xl'} isOpen={this.state.modal_finish} toggle={this.toggle_exit_finish}>
-                        <ModalHeader toggle={this.toggle_exit_finish}>Finish Transaksi</ModalHeader>
-                        <ModalBody>
-                            <center>
-                                <h1 className="lead">Berikan review tentang produk yang dibeli</h1>
-                                
-                                <table className="table table-responsive">
+                <div className="main-content">
+                    <div className="pt-5">
+                        <div className="container border rounded mb-5" style={{backgroundColor:'white'}}>
+                            {this.renderTransaction()}
+                        </div>
+                        <div>
+                        <Modal size={'lg'} isOpen={this.state.modal_detail} toggle={this.toggle_exit_detail}>
+                            <ModalHeader toggle={this.toggle_exit_detail}>Detail Transaksi</ModalHeader>
+                            <ModalBody>
+                                <table className="table table-hover">
                                     <thead>
                                         <tr>
                                             <td>No</td>
                                             <td>Gambar</td>
-                                            <td>Produk</td>
-                                            <td>Rating</td>
-                                            <td>Review</td>
-                                            <td>Action</td>
+                                            <td>Product</td>
+                                            <td>Qty</td>
+                                            <td>Harga</td>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {this.renderReview()}
+                                        {this.renderDetail()}
                                     </tbody>
                                 </table>
-                            </center>
-                        </ModalBody>
-                        <ModalFooter>
-                        
-                        <Button color="secondary" onClick={this.toggle_exit_finish}>Exit</Button>
-                        </ModalFooter>
-                    </Modal>
+                            </ModalBody>
+                            <ModalFooter>
+                            <Button color="secondary" onClick={this.toggle_exit_detail}>Cancel</Button>
+                            </ModalFooter>
+                        </Modal>
+                        <Modal size={'xl'} isOpen={this.state.modal_finish} toggle={this.toggle_exit_finish}>
+                            <ModalHeader toggle={this.toggle_exit_finish}>Finish Transaksi</ModalHeader>
+                            <ModalBody>
+                                <center>
+                                    <h1 className="lead">Berikan review tentang produk yang dibeli</h1>
+                                    
+                                    <table className="table table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <td>No</td>
+                                                <td>Gambar</td>
+                                                <td>Produk</td>
+                                                <td>Rating</td>
+                                                <td>Review</td>
+                                                <td>Action</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {this.renderReview()}
+                                        </tbody>
+                                    </table>
+                                </center>
+                            </ModalBody>
+                            <ModalFooter>
+                            
+                            <Button color="secondary" onClick={this.toggle_exit_finish}>Exit</Button>
+                            </ModalFooter>
+                        </Modal>
+                        </div>
+                        <Footer/>
                     </div>
-                    <Footer/>
                 </div>
             )
         }else{
