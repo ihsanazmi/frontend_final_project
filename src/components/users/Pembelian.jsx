@@ -83,7 +83,7 @@ class Pembelian extends Component {
         axios.get(`/transaction/getDetail/${transaction_id}`)
         .then(res=>{
             this.setState({detail_product : res.data})
-            console.log(res.data.length)
+            // console.log(res.data.length)
         })
         .catch(err=>{
             console.log(err)
@@ -98,6 +98,7 @@ class Pembelian extends Component {
     }
 
     renderDetail = ()=>{
+        
         if(this.state.detail_product === null){
             return
         }
@@ -105,7 +106,7 @@ class Pembelian extends Component {
         let render = this.state.detail_product.map((val)=>{
             i++
             return (
-                <tr key={val.transaction_id}>
+                <tr key={i}>
                     <td>{i}</td>
                     <td><img style={{width:45, height:45}} src={val.image_product} alt="Gambar Produk"/></td>
                     <td>{val.product}</td>
@@ -118,32 +119,28 @@ class Pembelian extends Component {
     }
 
     renderReview = ()=>{
-        if(this.state.detail_product === null){
+        if(this.state.detail_product === null || this.state.rating.length === 0){
             return
         }
         
-        let i = 0
-
-        console.log(this.state.detail_product)
-        
+        let i = 0        
         let render = this.state.detail_product.map((val)=>{
             i++
-
-        if(val.reviewed === '1'){
-           
-            return(
-                <tr key={i}>
-                <td>{i}</td>
-                <td><img src={val.image_product} style={{width:45, height:45}} alt="Gambar Produk"/></td>
-                <td className="w-25">{val.product}</td>
-                <td>
-                    <Rating style={{color: "yellow"}} value={val.rating} readonly={true} stars={5} cancel={false} />
-                </td>
-                <td><textarea disabled defaultValue={val.comment} className="form-control" id="" cols="40" rows="4"/></td>
-                <td><p className="bg-success">Already Review</p></td>
-            </tr>
-            )
-        }
+            if(val.reviewed === '1'){
+                return(
+                    <tr key={i}>
+                    <td>{i}</td>
+                    <td><img src={val.image_product} style={{width:45, height:45}} alt="Gambar Produk"/></td>
+                    <td className="w-25">{val.product}</td>
+                    <td>
+                        <Rating style={{color: "yellow"}} value={val.rating} readonly={true} stars={5} cancel={false} />
+                    </td>
+                    <td><textarea disabled defaultValue={val.comment} className="form-control" id="" cols="40" rows="4"/></td>
+                    <td><p className="bg-success">Already Review</p></td>
+                </tr>
+                )
+            }
+                
             let index = this.state.rating[i-1].index
             return(
                 <tr key={i}>

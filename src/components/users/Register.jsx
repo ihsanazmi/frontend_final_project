@@ -27,15 +27,17 @@ class Register extends Component {
         confPasswordOK: false,
         confPasswordNOK: false,
         confPasswordEmpty: false,
-        redirect: false
+        redirect: false,
+        loading: false,
     }
     
     onRegisterClick = (event)=>{
+        this.setState({loading: true})
         event.preventDefault()
-
         let {usernameInvalid, usernameEmpty, nameEmpty, phoneEmpty ,emailInvalid, confPasswordNOK} = this.state
         // console.log(usernameEmpty)
         if(usernameInvalid || usernameEmpty || nameEmpty || phoneEmpty || emailInvalid || confPasswordNOK){
+            this.setState({loading: false})
             alert('Harap input form dengan benar')
             return
         }
@@ -47,6 +49,7 @@ class Register extends Component {
         let _password = this.password.value
 
         if(!_name || !_username || !_email || !_phone || !_password ){
+            this.setState({loading: false})
             alert('Form tidak boleh kosong')
             if(!_name) this.setState({nameEmpty: true})
             if(!_username) this.setState({usernameEmpty: true})
@@ -75,17 +78,18 @@ class Register extends Component {
             }
         ).then((res)=>{
             // alert('registrasi berhasil')
+            this.setState({loading: false})
             if(res.data.error){
                 return alert(res.data.error)
             }
-
+            
             Swal.fire({
                 position: 'center',
                 icon: 'success',
                 title: 'Register berhasil',
                 showConfirmButton: false,
                 timer: 1000
-              })
+            })
             this.setState({redirect: true})
         }).catch(err=>{
             console.log(err)
@@ -243,7 +247,7 @@ class Register extends Component {
             }
             return (
                 <div className="main-content">
-                    <div className="col-6 mx-auto mt-5 card">
+                    <div className="col-md-6 col-11 mx-auto mt-5 card">
                         <div className="card-body">
                             <div className="border-bottom border-secondary card-title">
                                 <h1>REGISTER</h1>
@@ -289,7 +293,8 @@ class Register extends Component {
                                     <Input invalid={this.state.confPasswordNOK || this.state.confPasswordEmpty} valid={this.state.confPasswordOK} onBlur={this.handleConfirmPassword} innerRef={(input)=>{this.confPassword = input}} type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" />
                                     <FormFeedback invalid={this.state.confPasswordNOK || this.state.confPasswordEmpty}>Password Belum sesuai</FormFeedback>
                                 </FormGroup>
-                                <Button onClick={this.onRegisterClick} className="btn-block btn-danger">Register</Button>
+                                {this.state.loading ? <button class="btn btn-block btn-danger text-center" type="button" disabled><span class="spinner-border spinner-border-sm text-center" role="status" aria-hidden="true"></span>Loading...</button> : <Button onClick={this.onRegisterClick} className="btn-block btn-danger">Register</Button>}
+                                
                             </Form>
                         </div>
     

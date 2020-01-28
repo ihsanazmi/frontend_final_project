@@ -237,7 +237,7 @@ class Cart extends Component {
 
         }else{
             return(
-                <div className="pt-5">
+                <div className="main-content">
                     <div className="mt-5">
                         <center>
                             <h1 className="display-4">Oops!</h1>

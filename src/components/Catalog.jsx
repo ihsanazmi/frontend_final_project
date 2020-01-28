@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import moment from 'moment'
 import {connect} from 'react-redux'
 import {Spinner} from 'reactstrap'
+import {Paginator} from 'primereact/paginator'
 
 class Catalog extends Component {
 
@@ -23,7 +24,12 @@ class Catalog extends Component {
         seacrhProduct: null,
         mulaiDari: '',
         hingga: '',
-        keywords: ''
+        keywords: '',
+        first: 0, 
+        rows: 16,
+        lastIndex: 16,
+        totalRecords: 0,
+        resultFilter: []
     }
 
     componentDidMount(){
@@ -47,65 +53,14 @@ class Catalog extends Component {
         this.getAllProduct()
         this.getType()
         this.getCategory()
+        // this.getTotalRecord()
     }
 
     getAllProduct = ()=>{
         axios.get('/products')
         .then(res=>{
-            this.setState({allProduct:res.data})
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }
 
-    getCategory = ()=>{
-        axios.get('/products/getkategori')
-        .then(res=>{
-            this.setState({allCategory: res.data})
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }
-
-    getType = ()=>{
-        axios.get('/products/type_products')
-        .then(res=>{
-            this.setState({allType: res.data})
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    }
-
-    searchPrice = ()=>{
-        this.setState({
-            mulaiDari: parseInt(this.mulaiDari.value),
-            hingga: parseInt(this.hingga.value)
-        })
-    }
-
-    clearSearch = ()=>{
-        this.setState({
-            mulaiDari: '',
-            hingga: '',
-            keywords: ''
-        })
-        this.mulaiDari.value = ''
-        this.hingga.value = ''
-        this.searchName.value = ''
-    }
-
-    filterName = ()=>{
-        let keywords = this.searchName.value
-        // console.log(keywords)
-        this.setState({keywords})
-    }
-
-    dataCatalog = ()=>{
-
-        let dataAllProduct = this.state.allProduct
+        let dataAllProduct = res.data
         let resultFilter = []
         if(this.state.type.length !== 0){
             dataAllProduct.filter((val)=>{
@@ -167,9 +122,82 @@ class Catalog extends Component {
             })
             resultFilter = filterName
         }
+        console.log(resultFilter)
+        let records = 0
+        let result = ''
+            if(resultFilter === null){
+                records = res.data.length
+                result = res.data
+            }else{
+                records = resultFilter.length
+                result = resultFilter
+            }  
+            
 
-        // console.log(resultFilter)
-        
+            this.setState({allProduct:res.data, totalRecords : records, resultFilter: result, first: 0, lastIndex:16})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    getCategory = ()=>{
+        axios.get('/products/getkategori')
+        .then(res=>{
+            this.setState({allCategory: res.data})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    getType = ()=>{
+        axios.get('/products/type_products')
+        .then(res=>{
+            this.setState({allType: res.data})
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    }
+
+    onPageChange(event) {
+        this.setState({
+            first: event.first,
+            rows: event.rows,
+            lastIndex: event.first + event.rows
+        });
+    }
+
+    searchPrice = ()=>{
+        this.setState({
+            mulaiDari: parseInt(this.mulaiDari.value),
+            hingga: parseInt(this.hingga.value)
+        })
+        this.getAllProduct()
+    }
+
+    clearSearch = ()=>{
+        this.setState({
+            mulaiDari: '',
+            hingga: '',
+            keywords: ''
+        })
+        this.mulaiDari.value = ''
+        this.hingga.value = ''
+        this.searchName.value = ''
+    }
+
+    filterName = ()=>{
+        let keywords = this.searchName.value
+        // console.log(keywords)
+        this.setState({keywords})
+        this.getAllProduct()
+    }
+
+    dataCatalog = (first, last)=>{
+
+        let resultFilter = this.state.resultFilter.slice(first, last)
         if(resultFilter.length !== 0){
             let catalog = resultFilter.map((val)=>{
                 return(
@@ -281,24 +309,157 @@ class Catalog extends Component {
         // console.log(e.value)
         let selectedCategory = [...this.state.category];
         
-        if(e.checked)
+        if(e.checked){
             selectedCategory.push(e.value);
-        else
+        }else{
             selectedCategory.splice(selectedCategory.indexOf(e.value), 1);
+        }
 
-        this.setState({category: selectedCategory});
+        let dataAllProduct = this.state.allProduct
+        let resultFilter = []
+        if(this.state.type.length !== 0){
+            dataAllProduct.filter((val)=>{
+                for (let i = 0; i < this.state.type.length; i++){
+                    if(val.id_tipe === this.state.type[i]){
+                        resultFilter.push(val)
+                    }
+                }
+                return dataAllProduct
+            })
+        }else{
+            resultFilter = this.state.allProduct
+        }
+
+        let resultFilterCat = []
+        if(this.state.category.length !== 0 && this.state.type.length !== 0){
+            resultFilter.filter((val)=>{
+                for(let i = 0; i < this.state.category.length; i++){
+                    if(val.id_category === this.state.category[i]){
+                        resultFilterCat.push(val)
+                    }
+                }
+                return resultFilter
+            })
+            resultFilter = resultFilterCat
+        }else if(this.state.category.length !== 0 && this.state.type.length === 0){
+            dataAllProduct.filter((val)=>{
+                for(let i = 0; i<this.state.category.length; i++){
+                    if(val.id_category === this.state.category[i]){
+                        resultFilterCat.push(val)
+                    }
+                }
+                return dataAllProduct
+            })
+            resultFilter = resultFilterCat
+        }
+
+        if(this.state.mulaiDari && !this.state.hingga ){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga >= this.state.mulaiDari
+            })
+            resultFilter = filterPrice
+        }else if(this.state.mulaiDari && this.state.hingga){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga >= this.state.mulaiDari && val.harga <= this.state.hingga
+            })
+            resultFilter = filterPrice
+        }else if(!this.state.mulaiDari && this.state.hingga){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga <= this.state.hingga
+            })
+            resultFilter = filterPrice
+        }
+
+        if(this.state.keywords){
+            let filterName = []
+            filterName = resultFilter.filter((val)=>{
+                return val.nama_produk.toLowerCase().includes(this.state.keywords.toLowerCase())
+            })
+            resultFilter = filterName
+        }
+
+        this.setState({category: selectedCategory, totalRecords: resultFilter.length});
+        this.getAllProduct()
     }
 
     onTypeChange=(e)=>{
         // console.log(e.value)
         let selectedType = [...this.state.type];
         
-        if(e.checked)
+        if(e.checked){
             selectedType.push(e.value);
-        else
+        }
+        else{
             selectedType.splice(selectedType.indexOf(e.value), 1);
+        }
 
-        this.setState({type: selectedType});
+
+        let dataAllProduct = this.state.allProduct
+        let resultFilter = []
+        if(this.state.type.length !== 0){
+            dataAllProduct.filter((val)=>{
+                for (let i = 0; i < this.state.type.length; i++){
+                    if(val.id_tipe === this.state.type[i]){
+                        resultFilter.push(val)
+                    }
+                }
+                return dataAllProduct
+            })
+        }else{
+            resultFilter = this.state.allProduct
+        }
+
+        let resultFilterCat = []
+        if(this.state.category.length !== 0 && this.state.type.length !== 0){
+            resultFilter.filter((val)=>{
+                for(let i = 0; i < this.state.category.length; i++){
+                    if(val.id_category === this.state.category[i]){
+                        resultFilterCat.push(val)
+                    }
+                }
+                return resultFilter
+            })
+            resultFilter = resultFilterCat
+        }else if(this.state.category.length !== 0 && this.state.type.length === 0){
+            dataAllProduct.filter((val)=>{
+                for(let i = 0; i<this.state.category.length; i++){
+                    if(val.id_category === this.state.category[i]){
+                        resultFilterCat.push(val)
+                    }
+                }
+                return dataAllProduct
+            })
+            resultFilter = resultFilterCat
+        }
+
+        if(this.state.mulaiDari && !this.state.hingga ){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga >= this.state.mulaiDari
+            })
+            resultFilter = filterPrice
+        }else if(this.state.mulaiDari && this.state.hingga){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga >= this.state.mulaiDari && val.harga <= this.state.hingga
+            })
+            resultFilter = filterPrice
+        }else if(!this.state.mulaiDari && this.state.hingga){
+            let filterPrice = resultFilter.filter((val)=>{
+                return val.harga <= this.state.hingga
+            })
+            resultFilter = filterPrice
+        }
+
+        if(this.state.keywords){
+            let filterName = []
+            filterName = resultFilter.filter((val)=>{
+                return val.nama_produk.toLowerCase().includes(this.state.keywords.toLowerCase())
+            })
+            resultFilter = filterName
+        }
+
+        // console.log(resultFilter.length)
+        this.setState({type: selectedType, totalRecords: resultFilter.length});
+        this.getAllProduct()
     }
 
     renderCbCategory = ()=>{
@@ -333,8 +494,8 @@ class Catalog extends Component {
         return (
             <div className="main-content">
                 <div className="container-fluid pt-5">
-                    <div className="row">
-                        <div className="mx-auto mb-5 shadow-sm col-10 col-md-2 border rounded-lg overflow-auto" style={{height:'115vh'}}>
+                    <div className="row m-4">
+                        <div className="mb-5 pr-1 shadow-sm col-12 col-md-2 border rounded-lg overflow-auto" style={{height:'115vh'}}>
                             <h4 className="pt-4">Filter</h4>
                             <hr/>
                             <div>
@@ -371,11 +532,13 @@ class Catalog extends Component {
                             </div>
                         </div>
                         
-                        <div className="col-12 ml-auto col-md-10">
-                            <div className="row">
-                            <ReactTooltip place="top" type="dark" effect="solid"/>
-                                {this.dataCatalog()}
+                        <div className="col-12 mx-auto col-md-9 border rounded">
+                            <p className="text-muted px-3 py-1 border-bottom">Hasil Pencarian ({this.state.totalRecords} items)</p>
+                            <div className="row px-3 py-1">
+                                <ReactTooltip place="top" type="dark" effect="solid"/>
+                                    {this.dataCatalog(this.state.first, this.state.lastIndex)}
                             </div>
+                            <Paginator className="mb-4" first={this.state.first} rows={this.state.rows} totalRecords={this.state.totalRecords}onPageChange={(e)=>{this.onPageChange(e)}}></Paginator>
                             {/* <RenderCatalog  /> */}
                         </div>
                     </div>
